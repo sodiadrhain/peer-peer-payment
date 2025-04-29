@@ -16,6 +16,7 @@ Credit the recipient's balance
 |    |--- payment.test
 |--- package.json
 |--- [... other environment files]
+```
 
 ## Project setup
 Ensure you have the following softwares installed:
