@@ -9,6 +9,7 @@ import { PaymentRepository } from './payment.repository';
 import { Payments } from './payment.entity';
 import { Users } from '../user/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DatabaseConfig } from '../config/database.config';
 
 describe('Make Payment', () => {
   let paymentController: PaymentController;
@@ -19,19 +20,7 @@ describe('Make Payment', () => {
 
   beforeAll(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'root',
-          password: 'root',
-          database: 'ivory-test',
-          entities: [Users, Payments],
-          synchronize: true,
-        }),
-        TypeOrmModule.forFeature([Payments, Users]),
-      ],
+      imports: [DatabaseConfig, TypeOrmModule.forFeature([Payments, Users])],
       controllers: [PaymentController, UserController],
       providers: [
         PaymentService,
@@ -86,7 +75,7 @@ describe('Make Payment', () => {
     expect(res.message).toBe('Balance funded successfully');
   });
 
-  it(`should transfer 5000 from-user, to-user`, async () => {
+  it('should transfer 5000 from-user, to-user', async () => {
     const amount = '5000';
     const reference = getRandomString(10);
     const res = await paymentController.transfer({

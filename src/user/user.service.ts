@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { IUser } from './user.interface';
@@ -31,8 +35,16 @@ export class UserService {
   }
 
   async fundUserBalance(fundBalance: FundBalanceDto) {
+    const user = await this.getUser({ id: fundBalance.userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // new balance === balance + amount
+    const newBalance = Number(user.balance) + Number(fundBalance.amount);
+
     await this.userRepo.update({
-      balance: fundBalance.amount,
+      balance: newBalance.toString(),
       id: fundBalance.userId,
     });
 

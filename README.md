@@ -3,8 +3,9 @@
 A simple P2P payment feature for a wallet app, implementing an endpoint that allows a user to send money to another user. 
 
 Use Case:
-Debit the sender's balance
-Credit the recipient's balance
+- Debit the sender's balance
+- Credit the recipient's balance
+
 ## App Structure
 
 ```sh
@@ -12,8 +13,7 @@ Credit the recipient's balance
 |    |--- utils
 |    |--- user
 |    |--- payments
-|--- test
-|    |--- payment.test
+|         |--- payment.test
 |--- package.json
 |--- [... other environment files]
 ```
@@ -39,7 +39,7 @@ yarn install
 ### Start server
 
 ```
-yarn run dev
+yarn start:dev
 ```
 
 ### Server should be up on:
